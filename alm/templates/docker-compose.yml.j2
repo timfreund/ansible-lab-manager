@@ -1,0 +1,36 @@
+version: "3.3"
+
+services:
+  ansible:
+    image: neumann.vpn.freunds.net:5000/freund/ansible-lab:centos-8
+    command: /sbin/init
+    hostname: ansible
+    privileged: true
+    restart: always
+    tty: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - ansible-home:/home/ansible
+      - ./labs:/home/ansible/labs
+      - hosts-home:/home/ansible/hosts-home
+
+  {% for h in inventory.hosts %}
+  {{ h }}:
+    image: neumann.vpn.freunds.net:5000/freund/ansible-lab:centos-8
+    command: /sbin/init
+    # cap_add:
+    #   - SYS_ADMIN
+    hostname: {{ h }}
+    privileged: true
+    stdin_open: true
+    tty: true
+    tmpfs:
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - hosts-home:/home/ansible
+  {% endfor %}
+
+volumes:
+  ansible-home:
+  hosts-home:
