@@ -18,7 +18,4 @@ def ansible_lab_manager(inventory):
     compose_template = jinjaenv.get_template('docker-compose.yml.j2')
     compose_rendered = compose_template.render(template_context)
     print(compose_rendered)
-    # for h in inventory.hosts:
-    #     print(h)
-
 
