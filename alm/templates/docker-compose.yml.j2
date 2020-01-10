@@ -11,7 +11,7 @@ services:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - ansible-home:/home/ansible
-      - ./labs:/home/ansible/labs
+      - .:/home/ansible/project
       - hosts-home:/home/ansible/hosts-home
 
   {% for h in inventory.hosts %}
