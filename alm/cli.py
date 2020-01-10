@@ -6,7 +6,7 @@ from ansible.inventory.manager import InventoryManager
 from jinja2 import Environment, PackageLoader
 
 @click.command()
-@click.option('--inventory', default="./hosts", prompt='Ansible inventory file')
+@click.option('--inventory', default="./hosts")
 def ansible_lab_manager(inventory):
     config = autoload_configuration()
     template_context = config.copy()
