@@ -11,13 +11,13 @@ def load_config_file(file_path):
     c = {}
     try:
         with open(file_path, "r") as config_file:
-            c = yaml.load(config_file)
+            c = yaml.full_load(config_file)
     except Exception as e:
         print(e)
     return c
 
 def load_config_text(config_text):
-    return yaml.load(config_text)
+    return yaml.full_load(config_text)
 
 def load_environment_variables():
     c = {}
