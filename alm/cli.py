@@ -1,4 +1,6 @@
 import click
+import os
+import sys
 
 from alm import autoload_configuration
 from ansible.parsing.dataloader import DataLoader
@@ -7,7 +9,12 @@ from jinja2 import Environment, PackageLoader
 
 @click.command()
 @click.option('--inventory', default="./hosts")
-def ansible_lab_manager(inventory):
+@click.option('--output', default="./docker-compose.yml")
+def ansible_lab_manager(inventory, output):
+    if os.path.exists(output):
+        print("Output path %s already exists" % output)
+        sys.exit(-1)
+
     config = autoload_configuration()
     template_context = config.copy()
 
@@ -17,5 +24,5 @@ def ansible_lab_manager(inventory):
     jinjaenv = Environment(loader=PackageLoader('alm', 'templates'))
     compose_template = jinjaenv.get_template('docker-compose.yml.j2')
     compose_rendered = compose_template.render(template_context)
-    print(compose_rendered)
-
+    with open(output, "w") as output_file:
+        output_file.write(compose_rendered)
