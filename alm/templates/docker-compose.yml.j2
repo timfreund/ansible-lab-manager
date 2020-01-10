@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   ansible:
-    image: neumann.vpn.freunds.net:5000/freund/ansible-lab:centos-8
+    image: {{ docker_image }}
     command: /sbin/init
     hostname: ansible
     privileged: true
@@ -16,14 +16,14 @@ services:
 
   {% for h in inventory.hosts %}
   {{ h }}:
-    image: neumann.vpn.freunds.net:5000/freund/ansible-lab:centos-8
+    image: {{ docker_image }}
     command: /sbin/init
     # cap_add:
     #   - SYS_ADMIN
     hostname: {{ h }}
     privileged: true
     stdin_open: true
-    tty: true
+    # tty: true
     tmpfs:
       - /run
     volumes:
