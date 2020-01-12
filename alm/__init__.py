@@ -1,11 +1,14 @@
 import os
 import yaml
 
-try:
-    import importlib.resources as pkg_resources
-except ImportError:
-    # Try backported to PY<37 `importlib_resources`.
-    import importlib_resources as pkg_resources
+# # TODO pkg_resources isn't in 18.04's default python
+# # auditioning pkg_resources from setuptools
+# try:
+#     import importlib.resources as pkg_resources
+# except ImportError:
+#     # Try backported to PY<37 `importlib_resources`.
+#     import importlib_resources as pkg_resources
+import pkg_resources
 
 def load_config_file(file_path):
     c = {}
@@ -13,7 +16,7 @@ def load_config_file(file_path):
         with open(file_path, "r") as config_file:
             c = yaml.full_load(config_file)
     except Exception as e:
-        print(e)
+        pass
     return c
 
 def load_config_text(config_text):
@@ -34,7 +37,7 @@ def merge_configs(priority1, priority2):
     return c
 
 def autoload_configuration():
-    defaults = load_config_text(pkg_resources.read_text('alm', 'defaults.yml'))
+    defaults = load_config_text(pkg_resources.resource_string('alm', 'defaults.yml').decode('utf-8'))
     cwd = load_config_file(os.path.sep.join([os.getcwd(), ".ansible-lab-manager.yml"]))
     home = load_config_file(os.path.sep.join([os.path.expanduser("~"), ".ansible-lab-manager.yml"]))
     env = load_environment_variables()
