@@ -1,1 +1,2 @@
 docker_image: timfreund/ansible-lab:ubuntu-1804
+docker_image_alm: timfreund/ansible-lab:alm
