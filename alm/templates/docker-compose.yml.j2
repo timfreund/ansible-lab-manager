@@ -29,7 +29,7 @@ services:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - hosts-home:/home/ansible
-  {% endfor %}
+{% endfor %}
 
 volumes:
   ansible-home:
