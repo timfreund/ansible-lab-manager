@@ -3,11 +3,12 @@ version: "3.3"
 services:
   ansible:
     image: {{ docker_image_alm }}
-    command: /sbin/init
+    command: /bin/bash
     hostname: ansible
-    privileged: true
     restart: always
     tty: true
+    user: ansible
+    working_dir: /home/ansible
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - ansible-home:/home/ansible
